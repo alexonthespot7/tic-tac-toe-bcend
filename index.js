@@ -42,11 +42,11 @@ app.post('/api/addResult', (req, res) => {
   let sqlUpdate;
   
   if (resultT === 'Crosses') {
-    sqlUpdate = "UPDATE tictactoedb.users SET cross_wins = cross_wins + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET cross_wins = cross_wins + 1 WHERE login = ?"
   } else if (resultT === 'Noughts') {
-    sqlUpdate = "UPDATE tictactoedb.users SET nought_wins = nought_wins + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET nought_wins = nought_wins + 1 WHERE login = ?"
   } else {
-    sqlUpdate = "UPDATE tictactoedb.users SET draws = draws + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET draws = draws + 1 WHERE login = ?"
   }
 
   db.query(sqlUpdate, [login], (err, results) => {
