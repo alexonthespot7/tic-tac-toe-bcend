@@ -63,14 +63,12 @@ app.post('/api/getResultsByLogin', (req, res) => {
   });
 });
 
-app.get('/api/get', (req, res) => {
+app.get('/', (req, res) => {
   const sqlGet = "SELECT * FROM users";
   db.query(sqlGet, (err, result) => {
-    console.log(result);
+    res.send(result);
   });
 });
-
-app.get('/', (req, res) => res.send('Hello world'));
 
 app.listen(port, () => {
     console.log('running on port 3001');
