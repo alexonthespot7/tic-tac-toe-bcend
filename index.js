@@ -63,7 +63,7 @@ app.post('/api/getResultsByLogin', (req, res) => {
   });
 });
 
-app.get('/', (req, res) => {
+app.get('/api/get', (req, res) => {
   const sqlGet = "SELECT * FROM users";
   db.query(sqlGet, (err, result) => {
     res.send(result);
