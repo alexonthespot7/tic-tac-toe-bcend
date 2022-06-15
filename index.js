@@ -63,6 +63,15 @@ app.post('/api/getResultsByLogin', (req, res) => {
   });
 });
 
+app.post('api/resetStat', (req, res) => {
+  const login = req.body.login;
+
+  const sqlResetStat = "UPDATE users SET cross_wins=0, nought_wins=0, draws=0 WHERE login=?";
+  db.query(sqlResetStat, [login], (err, result) => {
+    res.send(result);
+  });
+});
+
 app.get('/api/get', (req, res) => {
   const sqlGet = "SELECT * FROM users";
   db.query(sqlGet, (err, result) => {
