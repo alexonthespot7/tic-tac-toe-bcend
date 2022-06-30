@@ -84,7 +84,7 @@ app.post('/api/getResultsByLogin', (req, res) => {
 app.post('/api/resetStat', (req, res) => {
   const login = req.body.login;
 
-  const sqlResetStat = "UPDATE users SET cross_wins=0, nought_wins=0, draws=0 WHERE login=?";
+  const sqlResetStat = "UPDATE users SET cross_wins=0, nought_wins=0, draws=0, bot_wins=0, user_wins=0, bot_draws=0 WHERE login=?";
   db.query(sqlResetStat, [login], (err, result) => {
     res.send(result);
   });
