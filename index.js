@@ -30,7 +30,7 @@ app.post('/api/register', (req, res) => {
 app.post('/api/login', (req, res) => {
   const login = req.body.login;
 
-  const sqlSelect = "SELECT password FROM users WHERE login=?";
+  const sqlSelect = "SELECT password FROM users WHERE BINARY login=?";
   db.query(sqlSelect, [login], (err, results) => {
     res.send(results);
   });
@@ -42,11 +42,11 @@ app.post('/api/addResult', (req, res) => {
   let sqlUpdate;
   
   if (resultT === 'Crosses') {
-    sqlUpdate = "UPDATE users SET cross_wins = cross_wins + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET cross_wins = cross_wins + 1 WHERE login = ?";
   } else if (resultT === 'Noughts') {
-    sqlUpdate = "UPDATE users SET nought_wins = nought_wins + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET nought_wins = nought_wins + 1 WHERE login = ?";
   } else {
-    sqlUpdate = "UPDATE users SET draws = draws + 1 WHERE login = ?"
+    sqlUpdate = "UPDATE users SET draws = draws + 1 WHERE login = ?";
   }
 
   db.query(sqlUpdate, [login], (err, results) => {
@@ -54,10 +54,28 @@ app.post('/api/addResult', (req, res) => {
   });  
 });
 
+app.post('/api/addBotResult', (req, res) => {
+  const login = req.body.login;
+  const result = req.body.result;
+  let sqlUpdateBot;
+
+  if (result === 'Bot') {
+    sqlUpdateBot = "UPDATE users SET bot_wins = bot_wins + 1 WHERE login = ?";
+  } else if (result === 'User') {
+    sqlUpdateBot = "UPDATE users SET user_wins = user_wins + 1 WHERE login = ?";
+  } else {
+    sqlUpdateBot = "UPDATE users SET bot_draws = bot_draws + 1 WHERE login = ?";
+  };
+
+  db.query(sqlUpdateBot, [login], (err, results) => {
+    res.send(results);
+  });
+});
+
 app.post('/api/getResultsByLogin', (req, res) => {
   const login = req.body.login;
 
-  const sqlSelectById = "SELECT cross_wins, nought_wins, draws FROM users WHERE login = ?";
+  const sqlSelectById = "SELECT cross_wins, nought_wins, draws, bot_wins, user_wins, bot_draws FROM users WHERE login = ?";
   db.query(sqlSelectById, [login], (err, results) => {
     res.send(results);
   });
